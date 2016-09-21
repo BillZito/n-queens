@@ -133,12 +133,30 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var start = majorDiagonalColumnIndexAtFirstRow;
+      var foundItems = 0;
+      for (var curRow = 0; curRow < this.get('n'); curRow++) {
+        for (var offset = 0; (offset + start < this.get('n')) && (offset + curRow < this.get('n')); offset++) {
+          if (this.get(curRow + offset)[start + offset] === 1) {
+            foundItems += 1;
+          }
+        }
+        if (foundItems > 1) {
+          return true;
+        }
+        foundItems = 0;
+      }
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      for (var curCol = 0; curCol < this.get('n'); curCol++) {
+        if (this.hasMajorDiagonalConflictAt(curCol)) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -148,12 +166,30 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var start = minorDiagonalColumnIndexAtFirstRow;
+      var foundItems = 0;
+      for (var curRow = 0; curRow < this.get('n'); curRow++) {
+        for (var offset = 0; (start - offset >= 0) && (curRow + offset < this.get('n')); offset++) {
+          if (this.get(curRow + offset)[start - offset] === 1) {
+            foundItems += 1;
+          }
+        }
+        if (foundItems > 1) {
+          return true;
+        }
+        foundItems = 0;
+      }
+      return false;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      for (var i = 0; i < this.get('n'); i++) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
