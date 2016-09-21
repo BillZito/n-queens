@@ -19,17 +19,9 @@ window.findNRooksSolution = function(n) {
   var board = new Board({'n': n});
   //call findSolution for first time
   var findSolution = function(boardState, currentRow) {
-    if ((boardState.get('n') - 1) === currentRow) {
-      for (var currentColumn = 0; currentColumn < n; currentColumn++) {
-        boardState.togglePiece(currentRow, currentColumn);
-        if (!boardState.hasAnyRooksConflicts()) {
-          return boardState.rows();
-        } else {
-          boardState.togglePiece(currentRow, currentColumn);
-        }
-      }
-      return undefined;
-    } 
+    if (n === currentRow) {
+      return boardState.rows();
+    }
     for (var currentColumn = 0; currentColumn < n; currentColumn++) {
       boardState.togglePiece(currentRow, currentColumn);
       if (!boardState.hasAnyRooksConflicts()) {
@@ -49,16 +41,8 @@ window.countNRooksSolutions = function(n) {
   var solutionCount = 0;
   var board = new Board({'n': n});
   var findSolution = function(boardState, currentRow) {
-    if (currentRow === n - 1) {
-      for (var currentColumn = 0; currentColumn < n; currentColumn++) {
-        boardState.togglePiece(currentRow, currentColumn);
-        if (!boardState.hasAnyRooksConflicts()) {
-          solutionCount += 1;
-          boardState.togglePiece(currentRow, currentColumn);
-        } else {
-          boardState.togglePiece(currentRow, currentColumn);
-        }
-      }
+    if (currentRow === n) {
+      solutionCount += 1;
     } else {
       for (var currentColumn = 0; currentColumn < n; currentColumn++) {
         boardState.togglePiece(currentRow, currentColumn);
@@ -91,17 +75,9 @@ window.findNQueensSolution = function(n) {
   var board = new Board({'n': n});
   //call findSolution for first time
   var findSolution = function(boardState, currentRow) {
-    if ((boardState.get('n') - 1) === currentRow) {
-      for (var currentColumn = 0; currentColumn < n; currentColumn++) {
-        boardState.togglePiece(currentRow, currentColumn);
-        if (!boardState.hasAnyQueensConflicts()) {
-          return boardState.rows();
-        } else {
-          boardState.togglePiece(currentRow, currentColumn);
-        }
-      }
-      return undefined;
-    } 
+    if (n === currentRow) {
+      return boardState.rows();
+    }
     for (var currentColumn = 0; currentColumn < n; currentColumn++) {
       boardState.togglePiece(currentRow, currentColumn);
       if (!boardState.hasAnyQueensConflicts()) {
@@ -135,16 +111,8 @@ window.countNQueensSolutions = function(n) {
   var solutionCount = 0;
   var board = new Board({'n': n});
   var findSolution = function(boardState, currentRow) {
-    if (currentRow === n - 1) {
-      for (var currentColumn = 0; currentColumn < n; currentColumn++) {
-        boardState.togglePiece(currentRow, currentColumn);
-        if (!boardState.hasAnyQueensConflicts()) {
-          solutionCount += 1;
-          boardState.togglePiece(currentRow, currentColumn);
-        } else {
-          boardState.togglePiece(currentRow, currentColumn);
-        }
-      }
+    if (currentRow === n) {
+      solutionCount += 1;
     } else {
       for (var currentColumn = 0; currentColumn < n; currentColumn++) {
         boardState.togglePiece(currentRow, currentColumn);
