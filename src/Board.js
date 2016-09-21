@@ -171,17 +171,17 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       var start = minorDiagonalColumnIndexAtFirstRow;
-      var foundItems = 0;
+      var foundItems = false;
       for (var curRow = 0; curRow < this.get('n'); curRow++) {
         for (var offset = 0; (start - offset >= 0) && (curRow + offset < this.get('n')); offset++) {
           if (this.get(curRow + offset)[start - offset] === 1) {
-            foundItems += 1;
+            if (foundItems === true) {
+              return true;
+            }
+            foundItems = true;
           }
         }
-        if (foundItems > 1) {
-          return true;
-        }
-        foundItems = 0;
+        foundItems = false;
       }
       return false;
     },
