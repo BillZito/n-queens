@@ -169,3 +169,38 @@ window.countNQueensSolutions = function(n) {
           //recursively call next level
   //return solutionCount
 };
+
+window.bitwiseCountNQueensSolutions = function(n) {
+  if ((n === 2) || (n === 3)) {
+    return 0;
+  }
+  var count = 0;
+  var complete = Math.pow(2, n) - 1;
+  var innerRecurse = function(columns, leftDiagonal, rightDiagonal) {
+    //if 
+    if (columns === complete) {
+      count += 1;
+      return;
+    } 
+
+    //find all open positions 
+    var poss = ~(columns | leftDiagonal | rightDiagonal);
+    //don't look at other digits beyond n
+    while (poss & complete) {
+      //set nextPosition to first open position
+      var nextPosition = poss & -poss;
+      //flip the next bit 
+      poss -= nextPosition;
+      leftDiagonal = (leftDiagonal | nextPosition) >> 1;
+      rightDiagonal = (rightDiagonal | nextPosition) << 1;
+      columns = columns | nextPosition;
+      innerRecurse(columns, leftDiagonal, rightDiagonal);
+    }
+  };
+
+  innerRecurse(0, 0, 0);
+  return count;
+
+};
+
+
