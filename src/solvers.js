@@ -66,6 +66,40 @@ window.countNRooksSolutions = function(n) {
   //return solutionCount
 };
 
+window.dec2bin = function (dec) {
+  return (dec >>> 0).toString(2);
+};
+
+
+window.bitwiseCountNRooksSolutions = function(n) {
+  //make count
+  var count = 0;
+  var complete = Math.pow(2, n) - 1;
+
+  //recursive function
+  var innerRecurse = function (column) {
+    //if colums is all 1s, all columns are filled. Done!
+    if (column === complete) {
+      count += 1;
+      return;
+    } else {
+      //get all available open column indexs
+      var poss = ~(column);
+      //set all digits beyond the nth to 0
+      while ((poss & complete)) {
+        //get the next open column index
+        var nextPosition = poss & -poss;
+        //set that column index as filled
+        poss -= nextPosition;
+        //call recursively.
+        innerRecurse(column | nextPosition);
+      }
+    }
+  };
+  innerRecurse(0);
+  return count;
+};
+
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
   console.log('we are on the ' + n);
